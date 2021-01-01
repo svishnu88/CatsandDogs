@@ -1,0 +1,28 @@
+trainer:
+  accelerator: None
+  gpus: 1
+  max_epochs: 12
+  precision: 16
+
+model:
+  _target_: lightning.DogsandCatsModel
+  model_name: 'resnet50'
+  num_classes: 1
+  loss_fn: binary_cross_entropy_with_logits
+  lr: 1e-3
+  wd: 1e-5
+
+data:
+  _target_: data.DogsandCatsDataModule
+  batch_size: 64
+  aug_p: 0.5
+  img_sz: 224
+  num_workers: 7
+  fold_id: 0
+  path: /notebooks/data/
+
+wandb:
+  _target_: pytorch_lightning.loggers.WandbLogger
+  name: "Dogs & Cats"
+  project: "Dogs and Cats"
+
